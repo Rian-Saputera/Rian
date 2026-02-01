@@ -20,7 +20,7 @@ def send_message():
     message = request.form.get("message")
 
     if not all([name, email, message]):
-        return render_template("error.html", message="Form tidak lengkap!")
+        return render_template("index.html", error="Form tidak lengkap!")
 
     # buat email
     msg = MIMEMultipart()
@@ -42,11 +42,11 @@ def send_message():
             server.login(EMAIL, PASSWORD)
             server.send_message(msg)
 
-        # tampilkan halaman sukses
-        return render_template("home.html")
+        # render index.html dengan pesan sukses
+        return render_template("index.html", success="Terima kasih, pesan Anda berhasil dikirim!")
     except Exception as e:
-        # tampilkan halaman error
-        return render_template("error.html", message=f"Gagal mengirim pesan: {e}")
+        # render index.html dengan pesan error
+        return render_template("index.html", error=f"Gagal mengirim pesan: {e}")
 
 if __name__ == "__main__":
     app.run(debug=True)
